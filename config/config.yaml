@@ -1,0 +1,50 @@
+data:
+  data_dir: data/chest_xray   # path to extracted dataset root
+  output_dir: outputs          # checkpoints, logs, and plots are saved here
+
+model:
+  name: resnet18          # options: custom_cnn | improved_cnn | resnet18
+  num_classes: 2
+  pretrained: true             # use ImageNet weights (resnet18)
+
+training:
+  epochs: 25
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  num_workers: 4
+  seed: 42
+
+  # Learning-rate scheduler
+  scheduler: cosine             # options: step_lr | reduce_on_plateau | cosine
+  label_smoothing: 0.1          # 0.0 disables; 0.1 is a good default
+  gradient_clip: 1.0            # max gradient norm; 0.0 disables
+
+  # StepLR settings (used when scheduler == step_lr)
+  step_lr_step_size: 7
+  step_lr_gamma: 0.1
+
+  # ReduceLROnPlateau settings (used when scheduler == reduce_on_plateau)
+  reduce_lr_patience: 3
+  reduce_lr_factor: 0.1
+
+  # CosineAnnealingLR settings (used when scheduler == cosine)
+  cosine_t_max: 25              # should match epochs for one full cycle
+  cosine_eta_min: 0.000001
+
+augmentation:
+  random_horizontal_flip: true
+  random_rotation: 10          # degrees (combined with affine below)
+  random_affine_shear: 5       # degrees of shear; 0 disables
+  color_jitter:
+    brightness: 0.2
+    contrast: 0.2
+    saturation: 0.2
+    hue: 0.05
+  gaussian_blur: true          # simulates X-ray acquisition noise
+  random_erasing: true         # forces global pattern learning
+
+normalization:
+  mean: [0.485, 0.456, 0.406]  # ImageNet statistics
+  std: [0.229, 0.224, 0.225]
+  image_size: 224

@@ -1,0 +1,38 @@
+# Dataset — download separately via Kaggle CLI
+data/
+
+# Model outputs and artefacts
+outputs/
+*.pth
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment variables
+.env
+.env.*
+
+# OS artefacts
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# AI
+.claude/
